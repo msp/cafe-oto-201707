@@ -1,130 +1,22 @@
 cps 1
 
-/*Ableton 145
-Strobe 150*/
+let ch1_2 = 0
+let ch3_4 = 0
+let ch5_6 = 0
+let ch7_8 = 0
+
 
 /***************************************
- *************** SPLICE ****************
+ ************* CAFE OTO ****************
  ***************************************/
-
-hush
-
-/************ INDUSTRIAL ************* /
-
- d1
- $ every 3 (fast 8)
- $ every 32 (0.25 <~)
- $ sound "industrial/2 industrial:5 industrial/3 industrial/2"
- # note (irand(32))
- # gain "0.7 0.8 0.9 0.8"
- # room 0.3
- # size (scale 0.1 1 (slow 8 (sine)))
-
- d1 silence
-
-
-/********** BLASTER/RISER ************ /
-
-d2
-$ spread ($) [fast 12, fast 3, slow 16, palindrome, fast 3, slow 20, fast 3, slow 20]
-$ juxBy 0.9 (|*| speed "5")
-$ sound "gab/10 ~ industrial industrial/2"
-# note (irand 32)
-# gain "0.9 0.7 0.7"
-# shape "0.8"
-|+| speed (scale 0.8 1.0 $ slow 1 $ sine)
-|+| accelerate 0.5
-# room (scale 0.2 0.1 (slow 7 (sine)))
-# size (scale 0.1 0.5 (slow 8 (sine)))
-
-d2 silence
-
-/*************** HI GRAIN ************* /
-
-t3 (xfadeIn 16) $ slow 5 $ striateL' 10 0.125 2 $ sound "msp:4" # gain "1.6"
-# bpf (scale 2000 6000 $ slow 5 sine1)
-# pan (scale 1 0 $ slow 10 $ sine1)
-
-d3 silence
-
-/*************** RYTM ***************** /
-
-t4 (xfadeIn 16)
-$ every 32 (0.25 <~)
-$ fast 1
-$ sound "glitch:1*2 rs:4*1 glitch:1*2 rs:4*1"
-# speed "0.8 0.2 -0.1"
-# cutoff (scale 500 6500 $ slow 10 sine1)
-# resonance (scale 0.1 0.3 $ slow 9 $ sine1)
-# gain "1"
-# delay 0.5
-# delaytime 0.1
-# delayfeedback (scale 0.1 0.4 $ slow 20 $ sine1)
-
-d4 silence
-
-/*************** ASCII ***************** /
-
-t5 (xfadeIn 16)
-$ every 3 (slow 12)
-$ every 32 (0.25 <~)
-$ speed "1 -5 ~ 0.8 1 ~ ~ -3"
-# gain "0.8 0.6 0.7 0.6"
-# sound "ascii"
-# note (irand 99)
-# delay 0.9
-# delaytime 0.1
-# delayfeedback (scale 0.2 0.6 $ slow 15 $ sine1)
-
-# cut "1"
-
-d5 silence
-
-/*************** FIELD ***************** /
-
-d6
-$ slow 30
-$ juxBy 0.9 (|*| speed "5")
-$ sound "msp:5"
-# gain "0.8"
-# pan (scale 1 0 $ slow 10 $ sine1)
-
-d6 silence
-
-/*************** SINES ***************** /
-
-t7 (xfadeIn 16)
-$ every 2 (0.25 <~)
-$ spread ($) [fast 4, palindrome, slow 5, striate' 2 4, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
-$ sound "[msp, msp:1]"
-# gain "0.6 0.2"
-# shape "0"
-# cutoff (scale 0 1850 $ slow 2 saw1)
-# resonance (scale 0.1 0.5 $ slow 19 $ sine1)
-# delay 0.5
-# delaytime 0.1
-# delayfeedback (scale 0.1 0.4 $ slow 20 $ sine1)
-
-d7 silence
-
-hush
-
-/***************************************
- *************** PLAYGROUND ************
- ***************************************/
-
-
-/* INTERESTING ! */
-
-# speed (scale 0.8 1.0 $ slow 1 $ sine)
 
 hush
 
 d1
 $ every 8 (0.25 <~)
 $ stack [
- sound "<msp msp:1 msp msp:1>/2 stab:5/6 odx:2/8",
- sound "odx:3/6 bd/8 ~ ~ gabba:0/8 ~",
+ sound "<<msp msp:1 msp msp:1>/2 stab:5/6 odx:2/8 >*2",
+ sound "<odx:3/6 bd/8 ~ ~ gabba:0/8 ~ >",
  sound "~ cp/4 ~"
 ]
 # speed "[[1 -0.6], [0.8 2]*2]/6"
@@ -134,7 +26,7 @@ $ stack [
 # delayfeedback (scale 0.1 0.6 $ slow 20 $ sine1)
 # room (scale 0.2 0.1 (slow 3 (sine)))
 # size (scale 0.1 0.8 (slow 8 (sine)))
-
+# orbit ch1_2
 # cut 1
 
 # pan (scale 1 0 $ slow 3 $ sine1)
@@ -148,33 +40,30 @@ $ stack [
 
 $ spread ($) [fast 2, palindrome, slow 5, striate' 2 4, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
 
+/*************** JAZZER ***************** /
+
 d1
 $ every 4 (slow 32)
 $ sound "psr*10"
 # note (irand(30))
-# gain "0.9 1 0.7"
+# gain "0.7 1 0.7"
 # room (scale 0.4 0.1 (slow 3 (sine)))
 # size (scale 0.1 0.8 (slow 8 (sine)))
 # pan (scale 1 0 $ slow 4 $ sine1)
 # cut 1
-
-hush
-
-d7
-$ every 4 (slow 60)
-$ sound "bass2 bass2"
+# orbit ch3_4
 
 d1 silence
 
-d7 silence
+/*************** GLITCH ***************** /
 
 d2
 $ every 4 (0.25 <~)
 $ stack [
- sound "<msp ~ print:1*2 ~ print:0 ~ ~>/10 <casio:1*2 ~ procshort*5>"
+ sound "<msp ~ print:1*2 ~ print:0 ~ ~ >/10 <casio:1*2? ~ procshort*3?>"
 ]
 # note (irand(30))
-# gain 0.8
+# gain 0.7
 # speed "[[0.5 1 -0.6], [3 -2 1 1.5]*2]/3"
 # shape (scale 0.1 0.7 $ slow 10 $ sine1)
 # delay 0.1
@@ -183,61 +72,117 @@ $ stack [
 # room (scale 0.4 0.1 (slow 3 (sine)))
 # size (scale 0.1 0.8 (slow 8 (sine)))
 # pan (scale 1 0 $ slow 2 $ sine1)
-
-# cut 1
+# orbit ch3_4
 
 d2 silence
 
+/*************** SUBS ***************** /
+
+let (f, f_p) = pF "f" (Just 440)
+
 d3
-$ spread ($) [fast 4, palindrome, slow 5, striate' 2 4, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
-$ sound "msp"
-# speed "[[-1 1 -0.6], [2 -2 1 -1.5]*2]/3"
-# shape (scale 0.1 0.7 $ slow 10 $ sine1)
-# cut 2
+$ sound "<tutorial5/2 ~>"
+# f "[50, 51]"
+# sustain 5
+# gain 1.1
+
+# accelerate 0.2
 
 d3 silence
 
+/*************** HI FX ***************** /
+
 d4
-$ every 16 (fast 10)
-$ sound "<sequential-msp*1>"
-# note (irand(8))
-# gain "0.7 0.9 0.7"
-# speed "[[0.5 1 -0.6], [3 -2 1 1.5]*2]/3"
-# shape (scale 0.1 0.7 $ slow 3 $ sine1)
-# room (scale 0.4 0.1 (slow 3 (sine)))
-# size (scale 0.1 0.4 (slow 8 (sine)))
-# pan (scale 1 0 $ slow 1 $ sine1)
-
-# cut 1
-
-hush
+$ every 16 (0.25 <~)
+$ sound "form-msp3"
+# speed "<[[-5 1 -0.6 3], [-1.2 -1 1 -1.5]*2]/3 ~>"
+# gain 0.7
+# shape 0.4
+# crush 5
+# bpf (scale 1000 20000 $ slow 5 sine1)
+# orbit ch3_4
+# accelerate (scale 0.4 0.1 (slow 10 (sine)))
 
 d4 silence
 
+hush
+
+t5 (xfadeIn 16)
+
+/*************** LOOP ***************** /
+
+/* WONKY */
+
 d5
-$ fast 1
 $ every 16 (0.25 <~)
-$ sound "<form-msp2*2 form-msp2*4 form-msp2*3>"
-# speed "[[-0.5 1 -0.6], [1.2 -1 1 -1.5]*2]/3"
-# cut 4
+$ spread ($) [fast 2, (# speed (scale 1 1.2 $ slow 5 $ saw1)), slow 2]
+$ stack [
+  sound "<form-msp2*2? form-msp2*4? [form-msp2*3? form-msp2] ~ ~ ~ ~ ~ ~ ~ ~ >"
+]
 # shape 0.3
-# gain "1.2 1.8 0.8"
+# gain "1.2 1.0 0.8"
+# room (scale 0.1 0.2 (slow 3 (sine)))
+# size (scale 0.1 0.4 (slow 8 (sine)))
+# orbit ch1_2
+
+/* STRAIGHT */
+
+d5
+$ fast 2
+$ stack [
+  sound "<form-msp2*2 form-msp2*4? form-msp2> / 4",
+  sound "<[techno:3/2 ~ ~ stab:2/16?]/2 <sd industrial:2 industrial:3 industrial:5*5? >> / 4"
+]
+# end 0.80
+# speed "1.2 1 1.2 -0.5"
+# gain "1.4 0.8"
+# shape 0.4
+# accelerate (scale 0.7 0.1 (slow 10 (sine)))
+# crush (scale 4 10 (slow 10 (sine)))
+# cutoff (scale 500 5000 $ slow 2 saw1)
+# orbit ch1_2
+
+# delay 0.1
+# delaytime 0.1
+# delayfeedback (scale 0.1 0.8 $ slow 10 $ sine1)
+
+# speed "1.5 1 1.8 -0.5"
 
 d5 silence
+
+hush
+
+/*************** DONK ***************** /
+
+d7
+$ fast 4
+$ stack [
+  sound "<form-msp4 ~ ~ form-msp4*2? ~ ~ ~ ~ form-msp4 ~ ~ ~ form-msp4*4? ~ ~ ~>"
+]
+# end (scale 0.10 0.5 (slow 15 sine))
+# gain "0.95"
+# orbit ch1_2
+
+d7 silence
+
+hush
+
+/*************** PADSZ ***************** /
 
 d6
 $ spread ($) [fast 4, palindrome, slow 5, striate' 2 4, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
 $ every 16 (0.25 <~)
-$ sound "<form-msp1*2 form-msp1*4 form-msp1*3>"
-# gain "0.6 0.8"
-# cutoff (scale 18500 20850 $ slow 2 saw1)
+$ sound "<form-msp1:0*2 form-msp1:0*4 form-msp1:1*3>"
+# gain "0.5 0.6"
+# cutoff (scale 500 800 $ slow 2 saw1)
 # resonance (scale 0.1 0.2 $ fast 19 $ sine1)
 # room (scale 0.4 0.1 (slow 3 (sine)))
 # size (scale 0.1 0.4 (slow 8 (sine)))
-# delay 0.1
+# delay 0.8
 # delaytime 0.1
 # delayfeedback (scale 0.1 0.8 $ slow 10 $ sine1)
 # pan (scale 1 0 $ slow 3 $ sine1)
+# orbit ch5_6
 
 # accelerate (scale 0.4 0.1 (slow 3 (sine)))
 
@@ -245,11 +190,53 @@ $ sound "<form-msp1*2 form-msp1*4 form-msp1*3>"
 
 d6 silence
 
-hush
+/*************** SYNTHS ***************** /
 
+/* MIC */
 
+d7
+$ sound "inr"
+# gain 1
 
-/*END INTERESTING*/
+d7 silence
+
+d8
+$ slow 2
+$ sound "cyclo"
+# n 1
+# gain 0.5
+# sustain 16
+# hpf 5000
+# hpq 1
+# pan (scale 1 0 $ slow 10 $ sine1)
+
+d8 silence
+
+d9
+$ sound "~ <imp>"
+# gain 0.8
+# speed 1
+# begin (scale 0 0.9 $ slow 4 $ saw1)
+# delay 0.5
+# delaytime (scale 0.1 0.6 $ slow 4 $ sine1)
+# delayfeedback 0.4
+
+d9 silence
+
+/***************************************
+ *************** PLAYGROUND ************
+ ***************************************/
+
+ runnow g d p' = do now <- g
+                    d $ (now + 0.1) ~> p'
+
+ oneshot g d p' = runnow g d $ seqP [(0, 1, p')]
+
+ oneshot' g d n p' = runnow g d $ seqP [(0, n, p')]
+
+ let os = oneshot getNow
+
+ os d1 $ sound "msp"
 
 
  $ sound "[msp/2 bd bd, sd cp sd hh ~ ~]"
@@ -267,15 +254,20 @@ d1 $ fastcat [sound "bd sn:2" # vowel "[a o]/2",
           sound "drum drum:2 drum:3 drum:4*2"
          ]
 
+d1 silence
+
 d1 $ interlace (sound  "bd sn kurt") (sound "hh rs hh")
 
 d1 $ (every 3 rev $ sound  "bd sn:2")
 
 d1 $ stack [
-  sound "bd bd*2",
-  sound "hh*2 [sn cp] cp future*4",
-  sound (samples "arpy*8" (run 16))
+  sound "bd/3",
+  sound "hh*2 [sn cp] cp future*1",
+  sound (samples "arpy*8" (run 64))
 ]
+# gain "0.7"
+
+d1 silence
 
 d1 $ whenmod 5 3 (striate 20) $ stack [
 
@@ -316,43 +308,6 @@ hush
 $ spread ($) [slow 10, palindrome, slow 5, striate' 2 4, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
 # pan 0.1
 
-let (f, f_p) = pF "f" (Just 440)
 
-d1
-$ sound "tutorial5/2"
-# f "[50, 51]"
-# sustain 5
-# gain 1
-# accelerate 0.1
-
-d1
-$ sound "inr"
-# gain 0.7
-
-d1 silence
-
-d1
-$ sound "bd hh bd sd"
-
-d1
-$ slow 10
-$ sound "cyclo"
-# n 1
-# gain 0.6
-# sustain 16
-# delay 0.5
-# delaytime 0.1
-# delayfeedback 0.5
-
-hush
-
-d1
-$ sound "imp"
-# gain 0.8
-# speed 1
-# begin (scale 0 0.9 $ slow 4 $ saw1)
-
-
-d1 silence
 
 hush
