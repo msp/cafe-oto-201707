@@ -1,0 +1,107 @@
+let silence1 = const $ degradeBy 0.3 $ sound "~"
+
+d1
+$ every 3 (silence1)
+$ every 4 (# speed 0.5)
+$ every 5 (silence1)
+$ every 8 (# speed 3)
+$ degradeBy 0.3 $ sound "form-msp5:4*8"
+# begin (scale 0.2 0.7 (fast 2 sine))
+# end (scale 0.05 0.8 $ sine1)
+# gain 0.8
+# accelerate 0
+# pan (scale 0 1 (slow 4 saw1))
+
+# speed (scale 1 5 (slow 6 saw1))
+# bpf (scale 1000 8000 $ fast 2(saw1))
+# bpq 0.9
+
+
+d1 silence
+
+d2
+$ sometimesBy 0.1 (# crush 4)
+$ every 3 (silence1)
+$ sound "form-msp5:2"
+# begin (scale 0.2 0.7 (slow 2 sine))
+# end (scale 0 1 (slow 16 sine))
+# gain 1.1
+# accelerate 0
+# bpf (scale 3000 5000 $ fast 2(saw1))
+
+hush
+
+d2 silence
+
+let (f, f_p) = pF "f" (Just 440)
+
+d3
+$ slow 1
+$ every 4 (0.5 <~)
+$ sound "<tutorial5 ~> tutorial5> <tutorial5 ~> tutorial5>"
+# f "[50, 51] 60"
+# sustain 2
+# gain 1
+# accelerate 0.3
+# cutoff 50
+
+d3 silence
+
+hush
+
+
+d4
+$ swingBy (0.38) 4
+$ every 8 (rev)
+$ every 32 (const $ degradeBy 0.1 $ sound "jungle:9*3" # gain 1.2 )
+$ sometimesBy 0.1 (# crush 4)
+$ slow 2
+$ degradeBy 0.4
+$ sound "[[[feel:5*8,amencutup*2] feel:3*8], amencutup*4]"
+# n (irand 8)
+# begin (scale 0 0.05 (slow 2 sine))
+# end (scale 0.4 0.7 (slow 16 sine))
+# accelerate 0
+# speed (scale 1.4 1.5 (slow 2 sine))
+# shape 0.4
+# gain "1.1 0.9"
+
+# hpf 3000
+
+d4 silence
+
+hush
+
+d5 $ swingBy (1/3) 4
+$ degradeBy 0.4
+$ sound "hc*2 hh?"
+# note (irand 8)
+# speed (scale 1.5 1.7 (slow 2 sine))
+# gain "1 0.8"
+
+# hpf 8000
+
+
+d6
+$ every 8 (rev)
+$ slow 2
+$ stut 2 0.2 (scale 0.1 0.9 (irand 30))
+$ degradeBy 0.5
+$ sound "~ stab*4"
+# note (irand 8)
+# shape 0.4
+# bpf (scale 1000 10000 (slow 8 (rand)))
+
+d6 silence
+
+hush
+
+d7
+$ spread ($) [palindrome, slow 5, striate' 2 16, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
+$ sound "<form-msp6:1> ~ <form-msp6:3> ~"
+# gain 0.8
+# cutoff (scale 500 16000 $ slow 2 sine1)
+# pan (scale 0 1 (slow 8 (sine)))
+
+
+d7 silence

@@ -1,6 +1,10 @@
 cps 1
 
+-- 140 4/4
+cps (140/60/4)
+
 let ch1_2 = 0
+
 let ch3_4 = 0
 let ch5_6 = 0
 let ch7_8 = 0
@@ -12,7 +16,18 @@ let ch7_8 = 0
 
 hush
 
+cat [bd sd
+
+let pat = "bd sd"::Pattern String
+
+arc pat (0,1)
+
+d1 $ sound pat
+
+d1 $ sound "bd sn"
+
 d1
+$ fast 2
 $ every 8 (0.25 <~)
 $ stack [
  sound "<<msp msp:1 msp msp:1>/2 stab:5/6 odx:2/8 >*2",
@@ -40,11 +55,13 @@ $ stack [
 
 $ spread ($) [fast 2, palindrome, slow 5, striate' 2 4, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
 
+d1 silence
+
 /*************** JAZZER ***************** /
 
 d1
 $ every 4 (slow 32)
-$ sound "psr*10"
+$ sound "psr*8"
 # note (irand(30))
 # gain "0.7 1 0.7"
 # room (scale 0.4 0.1 (slow 3 (sine)))
@@ -63,7 +80,7 @@ $ stack [
  sound "<msp ~ print:1*2 ~ print:0 ~ ~ >/10 <casio:1*2? ~ procshort*3?>"
 ]
 # note (irand(30))
-# gain 0.7
+# gain 0.8
 # speed "[[0.5 1 -0.6], [3 -2 1 1.5]*2]/3"
 # shape (scale 0.1 0.7 $ slow 10 $ sine1)
 # delay 0.1
@@ -83,10 +100,9 @@ let (f, f_p) = pF "f" (Just 440)
 d3
 $ sound "<tutorial5/2 ~>"
 # f "[50, 51]"
-# sustain 5
+# sustain 2
 # gain 1.1
-
-# accelerate 0.2
+# accelerate 0.5
 
 d3 silence
 
@@ -101,6 +117,7 @@ $ sound "form-msp3"
 # crush 5
 # bpf (scale 1000 20000 $ slow 5 sine1)
 # orbit ch3_4
+
 # accelerate (scale 0.4 0.1 (slow 10 (sine)))
 
 d4 silence
@@ -119,6 +136,8 @@ $ spread ($) [fast 2, (# speed (scale 1 1.2 $ slow 5 $ saw1)), slow 2]
 $ stack [
   sound "<form-msp2*2? form-msp2*4? [form-msp2*3? form-msp2] ~ ~ ~ ~ ~ ~ ~ ~ >"
 ]
+# end 0.8
+# speed "1.5"
 # shape 0.3
 # gain "1.2 1.0 0.8"
 # room (scale 0.1 0.2 (slow 3 (sine)))
@@ -130,23 +149,41 @@ $ stack [
 d5
 $ fast 2
 $ stack [
-  sound "<form-msp2*2 form-msp2*4? form-msp2> / 4",
-  sound "<[techno:3/2 ~ ~ stab:2/16?]/2 <sd industrial:2 industrial:3 industrial:5*5? >> / 4"
+  sound "<form-msp2*2 form-msp2*4? form-msp2> / 1",
+  sound "<[techno:3/2 ~ ~ stab:2/16?]/2 <sd industrial:2 industrial:3 industrial:5*5? >> / 8"
 ]
-# end 0.80
-# speed "1.2 1 1.2 -0.5"
+# end 0.3
+# speed "1.5 1.3 1.8 -0.5"
 # gain "1.4 0.8"
 # shape 0.4
+# orbit ch1_2
+# cut 1
+
 # accelerate (scale 0.7 0.1 (slow 10 (sine)))
 # crush (scale 4 10 (slow 10 (sine)))
-# cutoff (scale 500 5000 $ slow 2 saw1)
-# orbit ch1_2
+# cutoff (scale 0 22000 $ slow 2 saw1)
 
 # delay 0.1
 # delaytime 0.1
 # delayfeedback (scale 0.1 0.8 $ slow 10 $ sine1)
 
 # speed "1.5 1 1.8 -0.5"
+
+
+-- 140 4/4
+cps (140/60/2)
+
+hush
+
+d5
+$ fast 0.5
+$ stack [
+  sound "<[techno]>",
+  sound "<~ [techno:3]>"
+]
+# orbit ch1_2
+# gain 1.6
+# speed 0.5
 
 d5 silence
 
@@ -160,7 +197,9 @@ $ stack [
   sound "<form-msp4 ~ ~ form-msp4*2? ~ ~ ~ ~ form-msp4 ~ ~ ~ form-msp4*4? ~ ~ ~>"
 ]
 # end (scale 0.10 0.5 (slow 15 sine))
-# gain "0.95"
+# cutoff (scale 0 22000 $ slow 2 saw1)
+# resonance (scale 0.1 0.2 $ fast 19 $ sine1)
+# gain "1.2"
 # orbit ch1_2
 
 d7 silence
@@ -170,21 +209,24 @@ hush
 /*************** PADSZ ***************** /
 
 d6
-$ spread ($) [fast 4, palindrome, slow 5, striate' 2 4, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
+$ spread ($) [fast 4, palindrome, slow 5, striate' 2 16, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
 $ every 16 (0.25 <~)
-$ sound "<form-msp1:0*2 form-msp1:0*4 form-msp1:1*3>"
-# gain "0.5 0.6"
-# cutoff (scale 500 800 $ slow 2 saw1)
-# resonance (scale 0.1 0.2 $ fast 19 $ sine1)
+$ sound "<form-msp4:0*2 form-msp2:1*4 form-msp1:2*3>"
+# gain "0.8 0.6"
+# speed 4
+# cutoff (scale 50 2000 $ slow 2 saw1)
+# resonance (scale 0.1 0.4 $ fast 19 $ sine1)
 # room (scale 0.4 0.1 (slow 3 (sine)))
 # size (scale 0.1 0.4 (slow 8 (sine)))
-# delay 0.8
+
+# delay 0.4
 # delaytime 0.1
-# delayfeedback (scale 0.1 0.8 $ slow 10 $ sine1)
+# delayfeedback (scale 0.1 0.4 $ slow 10 $ sine1)
 # pan (scale 1 0 $ slow 3 $ sine1)
 # orbit ch5_6
 
 # accelerate (scale 0.4 0.1 (slow 3 (sine)))
+# cut 1
 
 # bpf (scale 500 6000 $ slow 5 sine1)
 
@@ -201,25 +243,42 @@ $ sound "inr"
 d7 silence
 
 d8
-$ slow 2
 $ sound "cyclo"
 # n 1
-# gain 0.5
+# gain 0.2
 # sustain 16
-# hpf 5000
+# hpf 4000
 # hpq 1
 # pan (scale 1 0 $ slow 10 $ sine1)
 
 d8 silence
 
 d9
+$ fast 4
+$ sound "~ <imp>"
+# gain 1.2
+# speed 4
+# shape 0.8
+# crush 4
+# begin (scale 0 0.9 $ slow 4 $ saw1)
+# bpf (scale 4000 6000 $ slow 10 $ sine1)
+
+# delay 0.5
+# delaytime (scale 0.1 0.6 $ slow 4 $ sine1)
+# delayfeedback 0.4
+# pan (scale 1 0 $ slow 2 $ sine1)
+
+
+d9
 $ sound "~ <imp>"
 # gain 0.8
 # speed 1
 # begin (scale 0 0.9 $ slow 4 $ saw1)
+# bpf (scale 4000 6000 $ slow 10 $ sine1)
 # delay 0.5
 # delaytime (scale 0.1 0.6 $ slow 4 $ sine1)
 # delayfeedback 0.4
+# pan (scale 1 0 $ slow 2 $ sine1)
 
 d9 silence
 
@@ -227,16 +286,6 @@ d9 silence
  *************** PLAYGROUND ************
  ***************************************/
 
- runnow g d p' = do now <- g
-                    d $ (now + 0.1) ~> p'
-
- oneshot g d p' = runnow g d $ seqP [(0, 1, p')]
-
- oneshot' g d n p' = runnow g d $ seqP [(0, n, p')]
-
- let os = oneshot getNow
-
- os d1 $ sound "msp"
 
 
  $ sound "[msp/2 bd bd, sd cp sd hh ~ ~]"
@@ -245,6 +294,89 @@ d9 silence
  $ spread ($) [(# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
 
 d1
+$ fast 1
+$ degradeBy 0.25
+$ sound "form-msp5 form-msp5*6"
+# n (run (irand(10)))
+# gain 1
+# cut 1
+
+# note (irand(10))
+
+d1 $ degradeBy 0.25 $ sound "bd*8 sd*4"
+
+d1 $ sometimesBy 0.25 (# crush 4) $ sound "bd arpy sn ~"
+
+
+
+d1 silence
+
+
+now <- getNow
+
+d1 $ (pure now) ~> seqPLoop [
+  (4, 12, sound "hh*2 [sn cp] cp future*4"),
+  (0, 12, sound (samples "arpy*8" (run 16)))
+]
+
+
+hush
+
+-- import System.IO.Unsafe
+-- showCycle x = unsafePerformIO (print x >> return True)
+-- d1 $ when showCycle (# gain 1) (sound "bd")
+d1 silence
+
+d3
+$ slow 4
+$ every 16 (0.25 <~)
+$ stut 7 0.2 0.3
+$ stack
+  [ n "ds7 [ds7 d7] c7 ~ ~ ~ ~" # s "imp" # sustain 0.2
+  ]
+# sustain 0.9
+# gain 0.9
+# vowel "a e i"
+
+d3 silence
+
+
+
+d1 $ bells
+
+hush
+
+d1 $ sound "techno:1 techno:1"
+# shape 0.8
+# gain "1.1 0.9"
+# speed "0.8 1.1"
+# room (scale 0.2 0.1 (slow 3 (sine)))
+# size (scale 0.1 0.9 (slow 2 (sine)))
+
+d1 silence
+
+
+d1
+$ degradeBy 0.1
+$ sound
+$ shuffle 3 "[bass2:4 bass2:0 bass2:3, industrial*8]"
+
+
+hush
+
+
+d1
+$ degradeBy 0.25 $ sound "<form-msp5:1*4> <form-msp5:2*4>"
+# end (scale 0.022 0.044 $ sine1)
+
+hush
+
+
+# cut 1
+
+hush
+
+d2
 $ sound "{msp/8 bd gabba:3/3, sd ~ ~ invaders:8 ~ ~ ~ rave2:4/3 ~ ~, ~ ~ ~ ~}%10"
 # gain 0.9
 

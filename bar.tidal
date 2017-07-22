@@ -1,0 +1,38 @@
+fill1 =
+const $ degradeBy 0.3 $ sound "form-msp5:4*16"
+# begin (scale 0 0.5 (fast 2 sine))
+# end (scale 0.05 0.15 $ sine1)
+# gain 1
+
+fill2 =
+const $ degradeBy 0.3 $ sound "form-msp5:5*16"
+  # begin (scale 0 0.1 (fast 2 sine))
+  # end (scale 1 0.854 $ sine1)
+  # room (scale 0.2 0.1 (slow 3 (sine)))
+  # size (scale 0.1 0.9 (slow 2 (sine)))
+  # gain 0.9
+  # shape 0.3
+  # pan (scale 0 1 saw1)
+
+fill3 =
+const $ degradeBy 0.3 $ sound "form-msp5:9*4"
+  # begin (scale 0 0.4 $ sine1)
+  # end (scale 0 0.3 $ sine1)
+  # shape 0.4
+  # gain 0.9
+
+
+hush
+
+d3
+$ sometimesBy 0.25 (# crush 4)
+$ every 3 (silence1)
+$ every 4 (silence1)
+$ every 5 (fill1)
+$ degradeBy 0.25 $ sound "<form-msp5:1*8>"
+# gain "1 0.8"
+# shape 0.5
+# end (scale 0.022 0.044 $ sine1)
+# pan (scale 0 1 (slow 2 saw1))
+
+d3 silence
