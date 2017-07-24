@@ -1,13 +1,16 @@
 cps 1
 
--- 140 4/4
-cps (140/60/4)
+cps (125/60/4)
 
 let ch1_2 = 0
-
 let ch3_4 = 0
 let ch5_6 = 0
 let ch7_8 = 0
+
+let silence1 = const $ degradeBy 0.3 $ sound "~"
+
+let (f, f_p) = pF "f" (Just 440)
+
 
 
 /***************************************
@@ -60,8 +63,11 @@ d1 silence
 /*************** JAZZER ***************** /
 
 d1
+$ degradeBy 0.3
 $ every 4 (slow 32)
-$ sound "psr*8"
+$ every 200 (# sound "gabba*16")
+$ every 300 (# sound "subroc3d*16")
+$ sound "psr*16"
 # note (irand(30))
 # gain "0.7 1 0.7"
 # room (scale 0.4 0.1 (slow 3 (sine)))
@@ -72,12 +78,15 @@ $ sound "psr*8"
 
 d1 silence
 
+hush
+
 /*************** GLITCH ***************** /
 
 d2
+$ degradeBy 0.3
 $ every 4 (0.25 <~)
 $ stack [
- sound "<msp ~ print:1*2 ~ print:0 ~ ~ >/10 <casio:1*2? ~ procshort*3?>"
+ sound "<msp ~ print:1*2 ~ print:0 ~ ~ >/10 <casio:1*2? ~ procshort*8?>"
 ]
 # note (irand(30))
 # gain 0.8
@@ -109,13 +118,15 @@ d3 silence
 /*************** HI FX ***************** /
 
 d4
+$ degradeBy 0.5
+$ spread ($) [fast 2, rev, slow 2, striateL' 16 0.33 2, (# speed "0.8")]
+$ sometimesBy 0.4 (# crush "5")
 $ every 16 (0.25 <~)
 $ sound "form-msp3"
 # speed "<[[-5 1 -0.6 3], [-1.2 -1 1 -1.5]*2]/3 ~>"
-# gain 0.7
+# gain 0.8
 # shape 0.4
-# crush 5
-# bpf (scale 1000 20000 $ slow 5 sine1)
+# bpf (scale 10000 20000 $ slow 5 sine1)
 # orbit ch3_4
 
 # accelerate (scale 0.4 0.1 (slow 10 (sine)))
@@ -123,8 +134,6 @@ $ sound "form-msp3"
 d4 silence
 
 hush
-
-t5 (xfadeIn 16)
 
 /*************** LOOP ***************** /
 
@@ -146,10 +155,12 @@ $ stack [
 
 /* STRAIGHT */
 
+hush
+
 d5
 $ fast 2
 $ stack [
-  sound "<form-msp2*2 form-msp2*4? form-msp2> / 1",
+  sound "<form-msp2*2 form-msp2*4? form-msp2> / 4",
   sound "<[techno:3/2 ~ ~ stab:2/16?]/2 <sd industrial:2 industrial:3 industrial:5*5? >> / 8"
 ]
 # end 0.3
@@ -175,11 +186,14 @@ cps (140/60/2)
 
 hush
 
+sound "<~ [supergong/16]>" # gain 0.5
+
 d5
 $ fast 0.5
 $ stack [
-  sound "<[techno]>",
-  sound "<~ [techno:3]>"
+  sound "<techno>",
+  sound "<~ [techno:3]>",
+  sound "<~ [techno:4]>"
 ]
 # orbit ch1_2
 # gain 1.6
@@ -245,7 +259,7 @@ d7 silence
 d8
 $ sound "cyclo"
 # n 1
-# gain 0.2
+# gain 0.5
 # sustain 16
 # hpf 4000
 # hpq 1
@@ -254,14 +268,15 @@ $ sound "cyclo"
 d8 silence
 
 d9
-$ fast 4
-$ sound "~ <imp>"
-# gain 1.2
+$ every 2 (# speed 1)
+$ sometimesBy 0.4 (# crush "4")
+$ fast 12
+$ sound "<imp> ~"
+# gain 1
 # speed 4
-# shape 0.8
-# crush 4
+# shape 0.4
 # begin (scale 0 0.9 $ slow 4 $ saw1)
-# bpf (scale 4000 6000 $ slow 10 $ sine1)
+# bpf (scale 2000 6000 $ slow 10 $ sine1)
 
 # delay 0.5
 # delaytime (scale 0.1 0.6 $ slow 4 $ sine1)
