@@ -24,20 +24,28 @@ $ (pure now) ~> seqPLoop [
 # speed 0.5
 # cutoff 50
 
+
+
+hush
+
 d1 silence
 
 -- GONG ARPS?
 $ spread ($) [fast 2, palindrome, slow 5, striate' 2 8, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
 
-d2
+t2 (xfadeIn 16)
+$ stut 7 0.2 0.5
 $ every 4 (0.25 <~)
 $ every 2 (silence1)
-$ fast 2
+$ every 3 (# speed 0.3)
+$ slow 16
 $ sometimesBy 0.1 (# crush "8")
 $ n "0-7 3-1 4-7"
 # sound "supergong"
 # speed (scale 0.1 1.7 (rand))
+# pan (scale 0 1 saw1)
 # gain 0.9
+# hpf 2000
 
 d2 silence
 

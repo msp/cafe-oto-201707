@@ -11,23 +11,29 @@ let silence1 = const $ degradeBy 0.3 $ sound "~"
 
 let (f, f_p) = pF "f" (Just 440)
 
+let pat = "bd sd"::Pattern String
 
+-- sync test
+
+cps (130/60/4)
+
+
+d1
+$ sometimesBy 0.4 (# crush 4)
+$ fast 1
+$ degradeBy 0.1
+$ sound "rs*4"
+# shape 0.4
+
+d1 $ silence
+
+hush
 
 /***************************************
  ************* CAFE OTO ****************
  ***************************************/
 
 hush
-
-cat [bd sd
-
-let pat = "bd sd"::Pattern String
-
-arc pat (0,1)
-
-d1 $ sound pat
-
-d1 $ sound "bd sn"
 
 d1
 $ fast 2
@@ -222,10 +228,12 @@ hush
 
 /*************** PADSZ ***************** /
 
+-- 3 pads here form-msp1, #2 crackles
 d6
+$ slow 1
 $ spread ($) [fast 4, palindrome, slow 5, striate' 2 16, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
 $ every 16 (0.25 <~)
-$ sound "<form-msp4:0*2 form-msp2:1*4 form-msp1:2*3>"
+$ sound "<form-msp4:0*2? form-msp1:1*4? form-msp1:2*3>"
 # gain "0.8 0.6"
 # speed 4
 # cutoff (scale 50 2000 $ slow 2 saw1)
@@ -245,6 +253,8 @@ $ sound "<form-msp4:0*2 form-msp2:1*4 form-msp1:2*3>"
 # bpf (scale 500 6000 $ slow 5 sine1)
 
 d6 silence
+
+hush
 
 /*************** SYNTHS ***************** /
 
@@ -283,6 +293,7 @@ $ sound "<imp> ~"
 # delayfeedback 0.4
 # pan (scale 1 0 $ slow 2 $ sine1)
 
+d9 silence
 
 d9
 $ sound "~ <imp>"

@@ -88,9 +88,18 @@ $ degradeBy 0.4
 $ sound "[[amencutup, feel:5*8], feelfx*4?]"
 # n (irand 8)
 # speed (scale 0.7 1.2 (rand))
-
 # hpf 2000
 
+d4 silence
+
+-- MORE FILLZ
+d4
+$ fast 2
+$ sometimesBy 0.5 (# crush 4)
+$ degradeBy 0.6
+$ sound "[[amencutup, feel:5*8]]"
+# n (run (irand(8)))
+# gain "1.1 0.9"
 
 hush
 
@@ -104,8 +113,9 @@ $ sound "hc*8 hh?"
 # note (irand 8)
 # speed (scale 1.5 1.7 (slow 2 sine))
 # gain "1 0.8"
-
 # hpf 8000
+
+d5 silence
 
 
 /*************** STABZ ***************** /
@@ -124,14 +134,16 @@ d6 silence
 
 hush
 
-/*************** VOxPADZ ***************** /
+/*************** PADZ ***************** /
 
 d7
 $ slow 8
 $ spread ($) [palindrome, slow 5, striate' 2 16, (# speed (scale 0.1 0.8 $ slow 5 $ sine1))]
-$ sound "<form-msp6:1> ~ <form-msp6:3> ~"
+$ sound "<form-msp6:1> ~ <form-msp6:1> ~"
 # gain 0.9
-# cutoff (scale 500 16000 $ slow 2 sine1)
 # pan (scale 0 1 (slow 8 (sine)))
+# hpf 1000
+
+# cutoff (scale 8500 16000 $ slow 2 sine1)
 
 d7 silence
